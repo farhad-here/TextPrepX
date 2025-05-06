@@ -4,6 +4,31 @@ import streamlit as st
 # import arabic_reshaper
 import parsivar as pars
 import re
+import os
+import zipfile
+import requests
+
+# === Download spell check model if not exists ===
+def download_and_extract_spell_data():
+    url = "https://www.dropbox.com/scl/fi/4lspgdqw0yym6w2ewhcs7/spell.zip?rlkey=fl0moighiw7s46pgorz1xjtg0&dl=1"
+    dest_folder = "resources"
+    zip_path = os.path.join(dest_folder, "spell.zip")
+
+    os.makedirs(dest_folder, exist_ok=True)
+
+    if not os.path.exists(os.path.join(dest_folder, "mybigram_lm.pckl")):
+        with requests.get(url, stream=True) as r:
+            with open(zip_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    f.write(chunk)
+
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(dest_folder)
+
+        os.remove(zip_path)
+
+# Run once on app startup
+download_and_extract_spell_data()
 
 
 
@@ -51,9 +76,9 @@ class PersianText():
        
        # check spell and punc and remove numbers and etc
        def finalCleaning(self):
-              # spell = pars.SpellCheck()
-              # misspeled = self.stem()
-              # self.text = spell.spell_corrector(misspeled)
+              spell = pars.SpellCheck('./resources/mybigram_lm.pckl')
+              misspeled = self.stem()
+              self.text = spell.spell_corrector(misspeled)
               self.text = re.sub(r'[^\w\s]', '',self.text)
               self.text = re.sub(r'\d+', '', self.text)
               self.text = re.sub(r'\s+', ' ', self.text).strip()
