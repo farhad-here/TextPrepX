@@ -5,7 +5,7 @@ import os
 import zipfile
 import requests
 
-# === Download spell check model if not exists ===
+# === Download spell check model ===
 def download_and_extract_spell_data():
     url = "https://www.dropbox.com/scl/fi/4lspgdqw0yym6w2ewhcs7/spell.zip?rlkey=fl0moighiw7s46pgorz1xjtg0&dl=1"
     dest_folder = "resources"
@@ -24,15 +24,13 @@ def download_and_extract_spell_data():
 
         os.remove(zip_path)
 
-# Run once on app startup
 download_and_extract_spell_data()
 
-
-# === Main Processing Class ===
+# === Text Preprocessing Class ===
 class PersianText:
-    def __init__(self, text, stopwords_text):
+    def __init__(self, text, stopwords_list):
         self.text = text
-        self.stopwords_set = set(stopwords_text.decode("utf-8").splitlines())
+        self.stopwords_set = set(stopwords_list)
 
     def normalize(self):
         normalizer = pars.Normalizer()
@@ -68,28 +66,27 @@ class PersianText:
         cleaned = re.sub(r'\s+', ' ', cleaned).strip()
         return cleaned
 
-
 # === Streamlit App ===
 st.title("🔤 Persian Text Preprocessing App")
-
 st.warning("This app is only for Persian text")
 
-uploaded_file = st.file_uploader("Upload a .txt file with your Persian text", type=["txt"])
+uploaded_text_file = st.file_uploader("Upload a .txt file with Persian text", type=["txt"])
 manual_text = st.text_input("Or type your Persian text here")
 
-if uploaded_file or manual_text:
-    if uploaded_file:
-        input_text = uploaded_file.read().decode('utf-8')
+if uploaded_text_file or manual_text:
+    if uploaded_text_file:
+        input_text = uploaded_text_file.read().decode('utf-8')
     else:
         input_text = manual_text
 
     st.markdown("### 📝 Original Text")
     st.markdown(f"<div dir='rtl' style='background:#222;padding:10px;color:#ffd580;border-radius:10px'>{input_text}</div>", unsafe_allow_html=True)
 
-    # Upload Persian stopwords file
     stopwords_file = st.file_uploader("Upload `persianstopwords.txt`", type=["txt"])
     if stopwords_file:
-        pt = PersianText(input_text, stopwords_file)
+        # FIX: read the file contents before decoding
+        stopwords_text = stopwords_file.read().decode("utf-8").splitlines()
+        pt = PersianText(input_text, stopwords_text)
 
         st.markdown("### 🔧 Normalized")
         st.markdown(pt.normalize(), unsafe_allow_html=True)
@@ -109,4 +106,4 @@ if uploaded_file or manual_text:
         st.markdown("### ✅ Final Cleaned Result")
         st.markdown(pt.final_cleaning(), unsafe_allow_html=True)
     else:
-        st.warning("⚠️ Please upload `persianstopwords.txt` file")
+        st.warning("⚠️ Please upload `persianstopwords.txt`")
