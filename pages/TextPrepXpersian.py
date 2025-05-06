@@ -6,8 +6,9 @@ import parsivar as pars
 import re
 
 class PersianText():
-       def __init__(self,text):
+       def __init__(self,text, stopword_file=None):
               self.text = text
+              self.stopword_file = stopword_file
        #normalize
        def Norm(self):
               #Normalizer
@@ -18,7 +19,8 @@ class PersianText():
               # bidi_text = get_display(reshaped_text)
               return normalized_text
        def stopw(self):
-              f = psw
+              if not self.stopword_file:
+                     return self.text  
               STOPWORDS = set(f.read().decode('utf-8').splitlines())
               words = self.Norm().split()
               filtered = [word for word in words if word not in STOPWORDS]
