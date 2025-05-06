@@ -1,9 +1,10 @@
 import streamlit as st
 #library
-from bidi.algorithm import get_display
-import arabic_reshaper
+# from bidi.algorithm import get_display
+# import arabic_reshaper
 import parsivar as pars
 import re
+
 
 class PersianText():
        def __init__(self,text):
