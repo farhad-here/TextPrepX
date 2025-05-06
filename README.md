@@ -60,6 +60,19 @@ This toolkit is ideal for data preprocessing in NLP pipelines, educational purpo
 ```bash
 pip install -r requirements.txt
 ```
+first create a spell folder in this path:
+```
+venv\Lib\site-packages\parsivar\resource
+```
+
+then replace these two file in the spell folder:
+```
+- onegram.pckl
+- mybigram_lm.pckl
+```
+
+#### 🔽<a href='https://www.dropbox.com/scl/fi/4lspgdqw0yym6w2ewhcs7/spell.zip?e=3&file_subpath=%2Fmybigram_lm.pckl&rlkey=fl0moighiw7s46pgorz1xjtg0&dl=0'>Download two files from here</a>
+
 ```bash
 streamlit run TEP.py
 ```
