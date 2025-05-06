@@ -10,8 +10,7 @@ from cleantext import clean
 from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag, word_tokenize
 from nltk.corpus import wordnet
-
-
+import nltk
 
 #oop text preprocessing
 class CleanText:
