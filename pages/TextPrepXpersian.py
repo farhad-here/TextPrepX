@@ -9,6 +9,9 @@ import re
 class PersianText():
        def __init__(self,text):
               self.text = text
+              self.bigram_lm = pars.data_helper.load_var("resources/mybigram_Im.pckl")
+              self.onegram_lm = pars.data_helper.load_var("resources/onegram.pckl")
+    
        #normalize
        def Norm(self):
               #Normalizer

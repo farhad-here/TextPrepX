@@ -10,8 +10,7 @@ from cleantext import clean
 from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag, word_tokenize
 from nltk.corpus import wordnet
-
-
+import nltk
 
 #oop text preprocessing
 class CleanText:
@@ -132,6 +131,11 @@ class CleanText:
             
               return self.text
 
+#nltk
+nltk.download('punkt_tab')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger_eng')
+nltk.download('wordnet')
 """# text pre-processing"""
 st.warning("#### Just for English")
 c_1,c_2 = st.columns(2)
