@@ -152,28 +152,27 @@ if upload_file or write_file:
               """
               st.markdown(html_code, unsafe_allow_html=True)
       
-       
+              '''---'''
+              '''## Result'''
+              html_code = f"""
+                     <div dir="rtl" style="
+                     background-color: #3b2f2f;
+                     padding: 16px;
+                     border-radius: 10px;
+                     border: 1px solid #a67c52;
+                     color: #ffd580;
+                     font-family: 'monospace', sans-serif;
+                     font-size: 24px;
+                     line-height: 1.8;
+                     ">
+                     {oop.finalCleaning()}
+                     </div>
+                     """
+              st.markdown(html_code, unsafe_allow_html=True)
 
 
        except:
               st.warning('# You forgot to drag and drop persianstopwords.txt')
 
-'''---'''
-'''## Result'''
-oop = PersianText(text)
-html_code = f"""
-              <div dir="rtl" style="
-              background-color: #3b2f2f;
-              padding: 16px;
-              border-radius: 10px;
-              border: 1px solid #a67c52;
-              color: #ffd580;
-              font-family: 'monospace', sans-serif;
-              font-size: 24px;
-              line-height: 1.8;
-              ">
-              {oop.finalCleaning()}
-              </div>
-              """
-st.markdown(html_code, unsafe_allow_html=True)
+
  
