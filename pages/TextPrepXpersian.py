@@ -11,7 +11,7 @@ import requests
 # === Download spell check model if not exists ===
 def download_and_extract_spell_data():
     url = "https://www.dropbox.com/scl/fi/4lspgdqw0yym6w2ewhcs7/spell.zip?rlkey=fl0moighiw7s46pgorz1xjtg0&dl=1"
-    dest_folder = "resources"
+    dest_folder = "./resources"
     zip_path = os.path.join(dest_folder, "spell.zip")
 
     os.makedirs(dest_folder, exist_ok=True)
