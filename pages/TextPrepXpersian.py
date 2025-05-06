@@ -4,13 +4,37 @@ import streamlit as st
 # import arabic_reshaper
 import parsivar as pars
 import re
+import os
+import zipfile
+import requests
+
+# This is just for myapp in streamlit cloud you can manualy download and use it or use this
+def download_and_extract_spell_data():
+    url = "https://www.dropbox.com/scl/fi/4lspgdqw0yym6w2ewhcs7/spell.zip?rlkey=fl0moighiw7s46pgorz1xjtg0&dl=1"
+    dest_folder = "resources"
+    zip_path = os.path.join(dest_folder, "spell.zip")
+
+    os.makedirs(dest_folder, exist_ok=True)
+
+    if not os.path.exists(os.path.join(dest_folder, "mybigram_lm.pckl")):
+        with requests.get(url, stream=True) as r:
+            with open(zip_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    f.write(chunk)
+
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(dest_folder)
+
+        os.remove(zip_path)  # optional: remove zip after extracting
+
+# Call this before any processing
+download_and_extract_spell_data()
 
 
 class PersianText():
        def __init__(self,text):
               self.text = text
-              self.bigram_lm = pars.data_helper.load_var("resources/mybigram_Im.pckl")
-              self.onegram_lm = pars.data_helper.load_var("resources/onegram.pckl")
+
     
        #normalize
        def Norm(self):
