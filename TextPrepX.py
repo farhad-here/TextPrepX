@@ -45,7 +45,6 @@ class CleanText:
       
        # remove stopwords(and is the)
        def stopWord(self):
-              nltk.download('stopwords')
               stp_wrd = stopwords.words('english')
               sp_txt = self.text.split(' ')
               text = [w for w in sp_txt if w not in stp_wrd]
@@ -131,6 +130,10 @@ class CleanText:
 
             
               return self.text
+
+#nltk
+nltk.download('punkt_tab')
+nltk.download('stopwords')
 
 """# text pre-processing"""
 st.warning("#### Just for English")
