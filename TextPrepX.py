@@ -135,6 +135,7 @@ class CleanText:
 nltk.download('punkt_tab')
 nltk.download('stopwords')
 nltk.download('averaged_perceptron_tagger_eng')
+nltk.download('wordnet')
 """# text pre-processing"""
 st.warning("#### Just for English")
 c_1,c_2 = st.columns(2)
