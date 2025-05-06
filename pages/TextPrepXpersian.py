@@ -172,7 +172,7 @@ html_code = f"""
               font-size: 24px;
               line-height: 1.8;
               ">
-              {.finalCleaning()}
+              {oop.finalCleaning()}
               </div>
               """
 st.markdown(html_code, unsafe_allow_html=True)
