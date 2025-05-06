@@ -48,11 +48,11 @@ class PersianText():
        
        # check spell and punc and remove numbers and etc
        def finalCleaning(self):
-              spell = pars.SpellCheck()
-              misspeled = self.stem()
-              self.text = spell.spell_corrector(misspeled)
-              self.text = re.sub(r'[^\w\s]', '',self.text)
-              self.text = re.sub(r'\d+', '', self.text)
+              # spell = pars.SpellCheck()
+              # misspeled = self.stem()
+              # self.text = spell.spell_corrector(misspeled)
+              self.text = re.sub(r'[^\w\s]', ' ',self.text)
+              self.text = re.sub(r'\d+', ' ', self.text)
               self.text = re.sub(r'\s+', ' ', self.text).strip()
 
               return ''.join(self.text)  
