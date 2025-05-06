@@ -1,17 +1,14 @@
 import streamlit as st
 #library
-# from bidi.algorithm import get_display
-# import arabic_reshaper
+from bidi.algorithm import get_display
+import arabic_reshaper
 import parsivar as pars
 import re
 
-
-
 class PersianText():
-       def __init__(self,text):
+       def __init__(self,text, stopword_file=None):
               self.text = text
-
-    
+              self.stopword_file = stopword_file
        #normalize
        def Norm(self):
               #Normalizer
@@ -22,7 +19,8 @@ class PersianText():
               # bidi_text = get_display(reshaped_text)
               return normalized_text
        def stopw(self):
-              f = psw
+              if not self.stopword_file:
+                     return self.text  
               STOPWORDS = set(f.read().decode('utf-8').splitlines())
               words = self.Norm().split()
               filtered = [word for word in words if word not in STOPWORDS]
@@ -50,9 +48,9 @@ class PersianText():
        
        # check spell and punc and remove numbers and etc
        def finalCleaning(self):
-              # spell = pars.SpellCheck()
-              # misspeled = self.stem()
-              # self.text = spell.spell_corrector(misspeled)
+              spell = pars.SpellCheck()
+              misspeled = self.stem()
+              self.text = spell.spell_corrector(misspeled)
               self.text = re.sub(r'[^\w\s]', '',self.text)
               self.text = re.sub(r'\d+', '', self.text)
               self.text = re.sub(r'\s+', ' ', self.text).strip()
