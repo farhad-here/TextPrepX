@@ -76,7 +76,7 @@ class PersianText():
        
        # check spell and punc and remove numbers and etc
        def finalCleaning(self):
-              spell = pars.SpellCheck('./resources/mybigram_lm.pckl')
+              spell = pars.SpellCheck('./resources/')
               misspeled = self.stem()
               self.text = spell.spell_corrector(misspeled)
               self.text = re.sub(r'[^\w\s]', '',self.text)
