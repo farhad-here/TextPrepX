@@ -160,6 +160,7 @@ if upload_file or write_file:
 
 '''---'''
 '''## Result'''
+oop = PersianText(text)
 html_code = f"""
               <div dir="rtl" style="
               background-color: #3b2f2f;
@@ -171,7 +172,7 @@ html_code = f"""
               font-size: 24px;
               line-height: 1.8;
               ">
-              {PersianText(text).finalCleaning()}
+              {.finalCleaning()}
               </div>
               """
 st.markdown(html_code, unsafe_allow_html=True)
