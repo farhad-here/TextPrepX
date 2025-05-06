@@ -1,0 +1,2 @@
+resources/mybigram_lm.pckl filter=lfs diff=lfs merge=lfs -text
+resources/onegram.pckl filter=lfs diff=lfs merge=lfs -text
