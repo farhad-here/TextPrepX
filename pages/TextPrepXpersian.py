@@ -1,14 +1,14 @@
 import streamlit as st
 #library
-from bidi.algorithm import get_display
-import arabic_reshaper
+# from bidi.algorithm import get_display
+# import arabic_reshaper
 import parsivar as pars
 import re
 
+
 class PersianText():
-       def __init__(self,text, stopword_file=None):
+       def __init__(self,text):
               self.text = text
-              self.stopword_file = stopword_file
        #normalize
        def Norm(self):
               #Normalizer
@@ -19,8 +19,7 @@ class PersianText():
               # bidi_text = get_display(reshaped_text)
               return normalized_text
        def stopw(self):
-              if not self.stopword_file:
-                     return self.text  
+              f = psw
               STOPWORDS = set(f.read().decode('utf-8').splitlines())
               words = self.Norm().split()
               filtered = [word for word in words if word not in STOPWORDS]
@@ -90,7 +89,7 @@ if upload_file or write_file:
        st.markdown(html_code, unsafe_allow_html=True)
     
        '''---'''
-       oop = PersianText(text)
+       oop =PersianText(text)
        '''## Normalize'''
        html_code = f"""
                      <div dir="rtl" style="
@@ -111,7 +110,6 @@ if upload_file or write_file:
        '''## StopWord in persian'''
        try:
               psw = st.file_uploader('drag persianstopwords.txt')
-              oop = PersianText(text, stopword_file=psw)
               html_code = f"""
                      <div dir="rtl" style="
                      background-color: #3b2f2f;
@@ -153,10 +151,16 @@ if upload_file or write_file:
               </div>
               """
               st.markdown(html_code, unsafe_allow_html=True)
-              '''---'''
-              '''## Result'''
-              
-              html_code = f"""
+      
+       
+
+
+       except:
+              st.warning('# You forgot to drag and drop persianstopwords.txt')
+
+'''---'''
+'''## Result'''
+html_code = f"""
               <div dir="rtl" style="
               background-color: #3b2f2f;
               padding: 16px;
@@ -170,13 +174,5 @@ if upload_file or write_file:
               {oop.finalCleaning()}
               </div>
               """
-              
-              st.markdown(html_code, unsafe_allow_html=True)
-       
-
-
-       except:
-              st.warning('# You forgot to drag and drop persianstopwords.txt')
-       
-
+st.markdown(html_code, unsafe_allow_html=True)
  
