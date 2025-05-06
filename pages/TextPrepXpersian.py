@@ -13,18 +13,16 @@ class PersianText():
         return normalized_text
 
     # Remove stop words
-    def stopw(self):
+    def stopw(self, stopwords_file):
         try:
-            # Make sure to upload 'persianstopwords.txt' file
-            psw = st.file_uploader('Drag and drop the Persian stopwords file (persianstopwords.txt)')
-            if psw is not None:
-                STOPWORDS = set(psw.read().decode('utf-8').splitlines())
-                words = self.Norm().split()
-                filtered = [word for word in words if word not in STOPWORDS]
-                self.text = ' '.join(filtered)
+            # Read stopwords file
+            STOPWORDS = set(stopwords_file.read().decode('utf-8').splitlines())
+            words = self.Norm().split()
+            filtered = [word for word in words if word not in STOPWORDS]
+            self.text = ' '.join(filtered)
             return self.text
-        except:
-            return "Please upload the stopwords file."
+        except Exception as e:
+            return f"Error: {str(e)}"
 
     # Tokenize sentence
     def tokenSen(self):
@@ -69,117 +67,15 @@ st.warning("#### Just for Persian")
 # Upload file or write
 upload_file = st.file_uploader('Drag file here')
 write_file = st.text_input('Write something')
+stopwords_file = st.file_uploader('Drag and drop the Persian stopwords file (persianstopwords.txt)', type='txt')
+
 if upload_file:
     text = upload_file.read().decode('utf-8')
 elif write_file:
     text = write_file
 
 '''---'''
-if upload_file or write_file:
+if (upload_file or write_file) and stopwords_file:
     '''## Text Display'''
     html_code = f"""
                 <div dir="rtl" style="
-                background-color: #3b2f2f;
-                padding: 16px;
-                border-radius: 10px;
-                border: 1px solid #a67c52;
-                color: #ffd580;
-                font-family: 'monospace', sans-serif;
-                font-size: 24px;
-                line-height: 1.8;
-                ">
-                {text}
-                </div>
-                """
-    st.markdown(html_code, unsafe_allow_html=True)
-
-    '''---'''
-    oop = PersianText(text)
-
-    '''## Normalize'''
-    html_code = f"""
-                <div dir="rtl" style="
-                background-color: #3b2f2f;
-                padding: 16px;
-                border-radius: 10px;
-                border: 1px solid #a67c52;
-                color: #ffd580;
-                font-family: 'monospace', sans-serif;
-                font-size: 24px;
-                line-height: 1.8;
-                color: #ffd580; /* Text color */
-                font-size: 18px; /* Font size larger */
-                ">
-                {oop.Norm()}
-                </div>
-                """
-    st.markdown(html_code, unsafe_allow_html=True)
-
-    '''---'''
-    '''## StopWord Removal in Persian'''
-    try:
-        # Upload stopwords file
-        psw = st.file_uploader('Drag persianstopwords.txt here')
-        html_code = f"""
-                <div dir="rtl" style="
-                background-color: #3b2f2f;
-                padding: 16px;
-                border-radius: 10px;
-                border: 1px solid #a67c52;
-                color: #ffd580;
-                font-family: 'monospace', sans-serif;
-                font-size: 24px;
-                line-height: 1.8;
-                ">
-                {oop.stopw()}
-                </div>
-                """
-        st.markdown(html_code, unsafe_allow_html=True)
-
-        '''---'''
-        '''# Tokenization - Sentence and Word'''
-
-        '''#### Sentence Tokenization'''
-        st.dataframe(oop.tokenSen())
-
-        '''#### Word Tokenization'''
-        st.dataframe(oop.tokenWor())
-
-        '''---'''
-        '''## Stem'''
-        html_code = f"""
-                <div dir="rtl" style="
-                background-color: #3b2f2f;
-                padding: 16px;
-                border-radius: 10px;
-                border: 1px solid #a67c52;
-                color: #ffd580;
-                font-family: 'monospace', sans-serif;
-                font-size: 24px;
-                line-height: 1.8;
-                ">
-                {oop.stem()}
-                </div>
-                """
-        st.markdown(html_code, unsafe_allow_html=True)
-
-        '''---'''
-        '''## Final Cleaning Result'''
-        html_code = f"""
-                <div dir="rtl" style="
-                background-color: #3b2f2f;
-                padding: 16px;
-                border-radius: 10px;
-                border: 1px solid #a67c52;
-                color: #ffd580;
-                font-family: 'monospace', sans-serif;
-                font-size: 24px;
-                line-height: 1.8;
-                ">
-                {oop.finalCleaning()}
-                </div>
-                """
-        st.markdown(html_code, unsafe_allow_html=True)
-
-    except Exception as e:
-        st.warning(f'Error: {str(e)}')
