@@ -90,7 +90,7 @@ if upload_file or write_file:
        st.markdown(html_code, unsafe_allow_html=True)
     
        '''---'''
-       oop =PersianText(text)
+       oop = PersianText(text)
        '''## Normalize'''
        html_code = f"""
                      <div dir="rtl" style="
@@ -111,6 +111,7 @@ if upload_file or write_file:
        '''## StopWord in persian'''
        try:
               psw = st.file_uploader('drag persianstopwords.txt')
+              oop = PersianText(text, stopword_file=psw)
               html_code = f"""
                      <div dir="rtl" style="
                      background-color: #3b2f2f;
@@ -154,6 +155,7 @@ if upload_file or write_file:
               st.markdown(html_code, unsafe_allow_html=True)
               '''---'''
               '''## Result'''
+              
               html_code = f"""
               <div dir="rtl" style="
               background-color: #3b2f2f;
@@ -168,6 +170,7 @@ if upload_file or write_file:
               {oop.finalCleaning()}
               </div>
               """
+              
               st.markdown(html_code, unsafe_allow_html=True)
        
 
